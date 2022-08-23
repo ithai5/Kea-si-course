@@ -1,0 +1,11 @@
+<nbaPlayer>
+<name>Lebron Jamse</name>
+<team>Los Angeles Lakers</team>
+<height>2.06</height>
+<wonChampionship>true</wonChampionship>
+<skills>
+    <skill>strength</skill>
+    <skill>agility</skill>
+    <skill>intelligence</skill>
+</skills>
+</nbaPlayer>
