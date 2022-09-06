@@ -1,8 +1,32 @@
 import express from "express"
 import fileUpload from "express-fileupload"
 import { convertCsvToObject, convertXMLToObject, convertYamlToObject,convertRawTextToObj } from "./convertToObject.js"
+import swaggerJsdoc from "swagger-jsdoc"
+import swaggerUi from "swagger-ui-express"
 const app = express()
 
+const options = {
+    definition: {
+      openapi: "3.0.0",
+      info: {
+        title: "LogRocket Express API with Swagger",
+        version: "0.1.0",
+        description:
+          "This is a simple CRUD API application made with Express and documented with Swagger",
+        license: {
+          name: "ISC",
+        }
+      }
+    },
+    apis: ["./routes/*.js"],
+}
+
+const specs = swaggerJsdoc(options);
+app.use(
+  "/api-docs",
+  swaggerUi.serve,
+  swaggerUi.setup(specs)
+);
 app.use(fileUpload({createParentPath: true}))
 
 app.post("/upload-file", (req,res) => {
