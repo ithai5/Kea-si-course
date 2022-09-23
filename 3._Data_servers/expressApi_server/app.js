@@ -7,7 +7,7 @@ app.get("/timestamp", (req, res) => {
 })
 
 app.get("/fastApi/time",async(req,res)=> {
-    const response = await fetch("http://localhost:4200/timestamp")
+    const response = await fetch("https://127.0.0.1:8080/timestamp")
     const timeInPythonWorld = await response.json()
     res.send(timeInPythonWorld)
 })

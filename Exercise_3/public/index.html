@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    .users{
+        display: flex;
+        flex-direction: column;
+        max-width: 400px;
+        background-color: rgb(223, 227, 230);
+    }
+    .user{
+        font-size: 30px;
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 20px 10px 20px;
+    
+    }
+    .status{
+        display: flex;
+        align-items: center;
+    }
+    .online{
+        background-color: rgb(153, 255, 0);
+        border-radius: 50%;
+        width: 25px;
+        height: 25px;
+    }
+    .offline{
+        background-color: rgb(255, 85, 0);
+        border-radius: 50%;
+        width: 25px;
+        height: 25px;
+    }
+    .notRegistered{
+        background-color: rgb(46, 46, 46);
+        border-radius: 50%;
+        width: 25px;
+        height: 25px;
+    }
+
+</style>
+<body>
+    <h1>hello world</h1>
+    <div class="users" id="users"></div>
+    <input type="text" placeholder="name" id="user-name">
+    <button onclick="connect()">Login</button>
+
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+            const socket = io()
+            //get current users status
+            socket.on("users", (data)=>{
+                document.getElementById("users").textContent =""
+                data.forEach(element => {
+                    genrateUser(element)
+                });
+            })
+            function connect() {
+                const userName = document.getElementById("user-name").value
+                socket.emit("login", {name: userName})
+            }
+            function genrateUser(user){
+            
+                const usersContainer = document.getElementById("users")
+                const userContainer = createElement("div", "user")
+
+                const nameContainer = createElement("div", "name")
+                nameContainer.textContent += user.name
+
+                const statusContainer = createElement("div", "status")
+                statusContainer.appendChild(createElement("div", user.status))
+                
+                userContainer.appendChild(nameContainer)
+                userContainer.appendChild(statusContainer)
+                usersContainer.appendChild(userContainer)
+            }
+
+            function createElement(elementType, className) {
+                const element = document.createElement(elementType)
+                element.classList.add(className)
+                return element
+            }
+    </script>
+</body>
+</html>
